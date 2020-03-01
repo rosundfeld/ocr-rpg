@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
 import './navbar.css';
 
@@ -7,11 +8,13 @@ export default function GetInfo() {
 
   return (
     <div>
-      <ul className="navUl">
-          <li><a>Home</a></li>
-          <li><a>Fichas</a></li>
-          <li><a>Campanhas</a></li>
-      </ul>
+      <Router>
+        <ul className="navUl">
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/fichas">Fichas</Link></li>
+            <li><Link to="/campanhas">Campanhas</Link></li>
+        </ul>
+      </Router>
     </div>
   );
 }
