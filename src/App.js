@@ -1,11 +1,11 @@
 import React from 'react';
-import GetInfo from './Components/getInfo'
-import Navbar from './Components/NavBar/navbar'
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
 import Home from './Views/Home/Home'
 import Fichas from './Views/Fichas/Fichas'
 import Campanhas from './Views/Campanhas/Campanhas'
+
+import { FaHome, FaScroll, FaBook } from 'react-icons/fa';
 
 import './App.css';
 
@@ -14,9 +14,9 @@ export default function App() {
     <Router>
       <div className="App">
         <ul className="navUl">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/fichas">Fichas</Link></li>
-            <li><Link to="/campanhas">Campanhas</Link></li>
+            <li><Link to="/"><FaHome style={{marginRight: "2%"}}/>Home</Link></li>
+            <li><Link to="/fichas"><FaScroll style={{marginRight: "2%"}}/>Fichas</Link></li>
+            <li><Link to="/campanhas"><FaBook style={{marginRight: "2%"}}/>Campanhas</Link></li>
         </ul>
         <div>
           <Switch>
@@ -25,7 +25,6 @@ export default function App() {
             <Route exact path="/campanhas" component={Campanhas} />
           </Switch>
         </div>
-        <GetInfo />
       </div>
     </Router>
   );
