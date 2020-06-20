@@ -1,32 +1,43 @@
 
 .flexContainer {
     display: flex;
+    height: 100vmin;
 }
 
 .login {
+    background-image: url('../../Assets/LoginWallpaper/loginTexture.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 50%;
+    border-right: solid 4px #944b44;
 }
 
-.wallpaper {
-    width: 50%;
+input {
+    width: 100%;
+ }
+
+.formLogin {
+    height: 23vh;
+    width: 35vh;
+    display: block;
+    padding: 5%;
+    background-image: url('../../Assets/LoginWallpaper/loginForm.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .wallpaper {
     width: 50%;
     height: 100%;
-    background: url('../../Assets/LoginWallpaper/wallpaper1.jpg');
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+    background: url('../../Assets/LoginWallpaper/wallpaper1.jpg') no-repeat;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
     background-size: cover;
-}
-.wallpaper img.wide {
-    max-width: 100%;
-    max-height: 100%;
-    height: auto;
-}
-.wallpaper img.tall {
-    max-height: 100%;
-    max-width: 100%;
-    width: auto;
 }
