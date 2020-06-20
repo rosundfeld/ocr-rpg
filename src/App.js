@@ -13,14 +13,14 @@ import { FaHome, FaScroll, FaBook, FaUser } from 'react-icons/fa';
 import './App.css';
 
 //materialUi
-import { Tooltip } from '@material-ui/core'
+import { Tooltip } from '@material-ui/core';
 
 export default function App() {
   return (
     <Router>
       <div className="App">
         <ul className="navUl">
-            <li> <Tooltip> <Link to="/"><FaHome style={{marginRight: "2%"}}/></Link> </Tooltip> </li>
+            <li> <Link to="/"><FaHome style={{marginRight: "2%"}}/></Link> </li>
             <li><Link to="/fichas"><FaScroll style={{marginRight: "2%"}}/>Fichas</Link></li>
             <li><Link to="/campanhas"><FaBook style={{marginRight: "2%"}}/>Campanhas</Link></li>
             <li><Link to="/login"><FaUser/></Link></li>
