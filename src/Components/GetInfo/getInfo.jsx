@@ -1,7 +1,20 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  formOcr: {
+    margin: "auto",
+    marginTop: "2%",
+    width: "50%"
+  }
+
+});
+
 export default function GetInfo() {
+  const classes = useStyles();
+
   const [imagePreview, setImagePreview] = useState(null);
   const [imageData, setImageData] = useState(null);
 
@@ -28,7 +41,7 @@ export default function GetInfo() {
 
   return (
     <div>
-      <form>
+      <form className={classes.formOcr}>
         <label for="myfile">Select a file:</label>
         <input
           type="file"

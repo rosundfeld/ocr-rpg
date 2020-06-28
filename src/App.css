@@ -50,11 +50,12 @@
   display: flex;
   text-align: center;
   position: fixed;
-  width: 100%;
+  width: calc(100% - 66px);
+
   height: 10%;
   border-right: 1px solid #944b44;
   background-color: #121212;
-  margin: 0;
+  margin-left: 66px;
   padding: 0;
   font-size: 1.5rem;
 }

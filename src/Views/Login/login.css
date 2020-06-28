@@ -21,6 +21,11 @@ input {
     width: 100%;
  }
 
+.formContainer ::placeholder {
+    color: white;
+    opacity: 1; /* Firefox */
+}
+
 .formLogin {
     height: 23vh;
     width: 35vh;
