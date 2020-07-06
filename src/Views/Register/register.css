@@ -1,0 +1,38 @@
+
+
+.flexContainer {
+    display: flex;
+    height: 100vmin;
+}
+
+
+
+input {
+    width: 100%;
+ }
+
+.formContainer ::placeholder {
+    color: white;
+    opacity: 1; /* Firefox */
+}
+
+.formRegister {
+    height: auto;
+    width: 45%;
+    display: block;
+    padding: 5%;
+    background-image: url('../../Assets/LoginWallpaper/loginForm.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.wallpaper {
+    width: 50%;
+    height: 100%;
+    background: url('../../Assets/LoginWallpaper/wallpaper1.jpg') no-repeat;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 //Views
@@ -8,7 +8,7 @@ import Campanhas from "./Views/Campanhas/Campanhas";
 import Login from "./Views/Login/login";
 
 //icones
-import { FaHome, FaScroll, FaBook, FaUser } from "react-icons/fa";
+import { FaHome, FaScroll, FaBook, FaUser, FaSignOutAlt, FaSignInAlt } from "react-icons/fa";
 
 //css
 import "./App.css";
@@ -18,7 +18,10 @@ import logo from "./Assets/logo/logoRPG.png";
 
 //materialUi
 import { makeStyles } from "@material-ui/core/styles";
-import { Tooltip, IconButton } from "@material-ui/core";
+import { Tooltip, IconButton, CircularProgress, Typography } from "@material-ui/core";
+
+//firebase
+import firebase from "./firebase";
 
 const useStyles = makeStyles({
   navIcon: {
@@ -32,7 +35,21 @@ const useStyles = makeStyles({
 export default function App() {
   const classes = useStyles();
 
-  return (
+  const [firebaseInitialized, setFirebaseInitialized] = useState(false);
+
+
+  async function logout() {
+    await firebase.logout();
+    // props.history.push('/')
+  }
+
+  useEffect(() => {
+    firebase.isInitialized().then(val => {
+      setFirebaseInitialized(val)
+    })
+  })
+
+  return firebaseInitialized !== false ? (
     <Router>
       <div className="App">
         <div className="header">
@@ -42,6 +59,7 @@ export default function App() {
                 <img src={logo} alt="logo"></img>
               </Link>
             </IconButton>
+            { firebase.getCurrentUsername() && <Typography style={{fontSize: "5vh", fontWeight: "bold"}}> Hello { firebase.getCurrentUsername() }</Typography>}
           </div>
         </div>
         <ul className="navUl">
@@ -72,15 +90,25 @@ export default function App() {
               </IconButton>
             </Tooltip>
           </li>
-          <li>
-            <Tooltip title="Login">
-              <IconButton className={classes.navIcon} aria-label="login">
-                <Link to="/login">
-                  <FaUser />
-                </Link>
+          { !firebase.getCurrentUsername() ?
+            <li>
+              <Tooltip title="Login">
+                <IconButton className={classes.navIcon} aria-label="login">
+                  <Link to="/login">
+                    <FaSignInAlt />
+                  </Link>
+                </IconButton>
+              </Tooltip>
+            </li>
+            :
+            <li>
+            <Tooltip title="logout">
+              <IconButton className={classes.navIcon} onClick={() => logout()} aria-label="login">
+                  <FaSignOutAlt style={{color: "white"}} />
               </IconButton>
             </Tooltip>
           </li>
+          }
         </ul>
         <div className="index">
           <Switch>
@@ -92,5 +120,5 @@ export default function App() {
         </div>
       </div>
     </Router>
-  );
+  ) : <div id="loader"><CircularProgress /></div>
 }
