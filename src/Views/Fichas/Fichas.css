@@ -78,3 +78,45 @@ input[type=number] {
     background-image: url("../../Assets/Ficha/classeArmadura.jpg");
     padding: 5%;
 }
+
+.formSmall input {
+    font-size: 1rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.formSmall  {
+    width: 50%;
+}
+
+.formBig input{
+    font-size: 2rem;
+    padding: 0;
+    font-weight: bold;
+}
+
+.formBig {
+   width: 40%;
+}
+
+.failSuccessCheckbox {
+    padding: 0;
+    display: flex;
+}
+.textAreaLanguage {
+    width: 100%;
+    height: 9rem;
+}
+
+.textAreaLanguage textarea{
+    max-height: 120px;
+}
+
+.textAreaHabilities textarea{
+    max-height: 736px;
+}
+
+#itemBonus {
+    font-size: 1rem;
+}

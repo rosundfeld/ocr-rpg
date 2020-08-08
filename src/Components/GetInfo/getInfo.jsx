@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   formOcr: {
     margin: "auto",
     marginTop: "2%",
-    width: "95%"
+    width: "20%"
   },
   inputImage: {
     border: "#944b44 solid 1px",
@@ -33,6 +33,13 @@ const useStyles = makeStyles({
     maxWidth: "500px",
     maxHeight: "900px",
     margin: "1%"
+  },
+  inputFileButton: {
+    width: "15%",
+    display: "flex",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center"
   }
 
 });
@@ -79,7 +86,7 @@ export default function GetInfo() {
 
 
 
-        <input type="submit" value="Enviar" />
+        <input type="submit" value="Escolher imagem da Ficha" />
         {imagePreview === null ? (
           <span>Nenhuma ficha selecionada</span>
         ) : (
