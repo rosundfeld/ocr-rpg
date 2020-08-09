@@ -7,8 +7,8 @@
 .index {
   float: right;
   width: calc(100% - 60px);
-  height: calc(100vmin - 60px);
-  margin-top: 75px;
+  height: calc(100vmin);
+  margin-top: 2.3rem;
   position: static;
   overflow: hidden;
   background-color: #ededed;
@@ -51,7 +51,7 @@
   text-align: center;
   position: fixed;
   width: calc(100% - 66px);
-
+  z-index: 999;
   height: 10%;
   border-right: 1px solid #944b44;
   background-color: #121212;
@@ -83,6 +83,7 @@
   margin: 0;
   padding: 0;
   font-size: 1.5rem;
+  z-index: 999;
 }
 
 .navUl li {
