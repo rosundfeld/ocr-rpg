@@ -1,7 +1,8 @@
 //firebase
-import firebase from 'firebase/app';
+import app from 'firebase/app';
+import 'firebase/firestore';
 import "firebase/auth";
-import "firebase/firebase-firestore"; 
+import "firebase/storage";
 
 
 var config = {
@@ -18,10 +19,19 @@ var config = {
 
 class Firebase {
   constructor() {
-    firebase.initializeApp(config)
-    this.auth = firebase.auth()
-    this.db = firebase.firestore()
+    app.initializeApp(config)
+    this.auth = app.auth()
+    this.db = app.firestore()
+    this.storage = app.storage()
   }
+
+  // population(){
+  //   app.db.firestore().collection('camps-list').add({
+  //       name: "Thunder Giants",
+  //       master: "Pedro Pinho",
+  //       char: "Miffhir"
+  //     })
+  // }
 
   login(email, password){
     return this.auth.signInWithEmailAndPassword(email, password)
@@ -48,5 +58,9 @@ class Firebase {
     return this.auth.currentUser && this.auth.currentUser.displayName
   }
 
+  getCurrentEmail() {
+    return this.auth.currentUser && this.auth.currentUser.email
+  }
+
 }
-export default new Firebase();
+export default new Firebase()

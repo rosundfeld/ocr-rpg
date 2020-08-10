@@ -18,7 +18,7 @@ import logo from "./Assets/logo/logoRPG.png";
 
 //materialUi
 import { makeStyles } from "@material-ui/core/styles";
-import { Tooltip, IconButton, CircularProgress, Typography } from "@material-ui/core";
+import { Tooltip, IconButton, CircularProgress, Typography, Button, Menu, MenuItem } from "@material-ui/core";
 
 //firebase
 import firebase from "./firebase";
@@ -36,11 +36,12 @@ export default function App() {
   const classes = useStyles();
 
   const [firebaseInitialized, setFirebaseInitialized] = useState(false);
-
-
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  
   async function logout() {
     await firebase.logout();
-    // props.history.push('/')
+    // history.replace('/login')
+    window.location.reload(false);
   }
 
   useEffect(() => {
@@ -48,6 +49,15 @@ export default function App() {
       setFirebaseInitialized(val)
     })
   })
+
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return firebaseInitialized !== false ? (
     <Router>
@@ -59,7 +69,33 @@ export default function App() {
                 <img src={logo} alt="logo"></img>
               </Link>
             </IconButton>
-            { firebase.getCurrentUsername() && <Typography style={{fontSize: "5vh", fontWeight: "bold"}}> Hello { firebase.getCurrentUsername() }</Typography>}
+          </div>
+          <div className="userContainer">
+            {firebase.getCurrentUsername() ? 
+            <div>
+              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                <Typography className="username" > { firebase.getCurrentUsername() }</Typography>
+              </Button> 
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={() => handleClose}> <Link to="/login">Perfil</Link></MenuItem>
+                <MenuItem onClick={() => logout()}>Logout</MenuItem>
+              </Menu>
+              </div>
+              :
+              <div>
+                <Tooltip title="Login">
+                  <Link to="/login" className="loginHeaderButton">
+                      <FaSignInAlt />
+                  </Link>
+                </Tooltip>
+              </div>
+            }
           </div>
         </div>
         <ul className="navUl">
@@ -73,15 +109,6 @@ export default function App() {
             </Tooltip>
           </li>
           <li>
-            <Tooltip title="Fichas">
-              <IconButton className={classes.navIcon} aria-label="fichas">
-                <Link to="/fichas">
-                  <FaScroll />
-                </Link>
-              </IconButton>
-            </Tooltip>
-          </li>
-          <li>
             <Tooltip title="Campanhas">
               <IconButton className={classes.navIcon} aria-label="campanhas">
                 <Link to="/campanhas">
@@ -90,7 +117,16 @@ export default function App() {
               </IconButton>
             </Tooltip>
           </li>
-          { !firebase.getCurrentUsername() ?
+          <li>
+            <Tooltip title="Fichas">
+              <IconButton className={classes.navIcon} aria-label="fichas">
+                <Link to="/fichas">
+                  <FaScroll />
+                </Link>
+              </IconButton>
+            </Tooltip>
+          </li>
+          {/* { !firebase.getCurrentUsername() ?
             <li>
               <Tooltip title="Login">
                 <IconButton className={classes.navIcon} aria-label="login">
@@ -108,7 +144,7 @@ export default function App() {
               </IconButton>
             </Tooltip>
           </li>
-          }
+          } */}
         </ul>
         <div className="index">
           <Switch>

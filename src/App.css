@@ -48,6 +48,8 @@
 
 .header {
   display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   position: fixed;
   width: calc(100% - 66px);
@@ -107,4 +109,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.userContainer {
+  margin-right: 2rem;
+}
+.username {
+  color: white; 
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.loginHeaderButton {
+  color: white;
+  text-decoration: none;
 }
