@@ -16,13 +16,6 @@ import AddIcon from '@material-ui/icons/Add';
 import firebase from "../../firebase";
 import 'firebase/firestore';
 
-// firebase.firestore().collection('campBook'.add({
-//   master: 'Pedro Pinho',
-//   character: 'Miffir',
-//   campName: 'Thunder Lords'
-// }))
-
-
 const useStyles = makeStyles({
   container: {
     width: "20%",
@@ -32,7 +25,7 @@ const useStyles = makeStyles({
   addCampContainer: {
     width: "100%",
     padding: "0.5rem",
-    height: "18rem",
+    height: "",
     justifyContent: "center",
     alignItems: "center"
   },
@@ -63,24 +56,18 @@ const useStyles = makeStyles({
 
 });
 
-export default function CampaingCard({ camp }) {
+export default function CampaingCard({ camp, setOpenCampDialog }) {
 
   const classes = useStyles();
+
+  function openCampDialog() {
+    setOpenCampDialog(true);
+  }
 
   function useCamp() {
     const [campList, setCampList] = useState([])
 
-    useEffect(() => {
-      firebase
-        .firestore()
-        .collection('campList')
-        .onSnapshot((snapshot) => {
-          const newCamps = snapshot.docs.map((camp) => ({
-            id: camp.id,
-            ...camp.data()
-          }))
-        })
-    }, [])
+
 
     return campList;
   }
@@ -108,7 +95,7 @@ export default function CampaingCard({ camp }) {
       </Paper>
     </div> :
     <div className={classes.container}>
-      <Paper className={classes.addCampContainer}>
+      <Paper onClick={() => openCampDialog()} className={classes.addCampContainer}>
         <Grid container direction="column" justify="center" alignItems="center" className={classes.campCard}>
           <Grid item xs={12} className={classes.textContainer}>
             <IconButton className={classes.addButton}>
