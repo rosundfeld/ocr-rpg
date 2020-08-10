@@ -58,17 +58,19 @@ export default function Register({ setRegisterOpen }) {
     }
 
     async function onRegister() {
-        // if(userPwdInfo !== userPwdRptInfo){
-
-        // }
-        try {
-            await firebase.register(userNameInfo, userEmailInfo, userPwdInfo);
-            handleRegister();
-
+        if (userPwdInfo === userPwdRptInfo) {
+            try {
+                await firebase.register(userNameInfo, userEmailInfo, userPwdInfo);
+                handleRegister();
+                alert("Registrado com Sucesso!")
+            }
+            catch (error) {
+                alert(error.message);
+            }
+        } else {
+            alert("Senhas não estão iguais!")
         }
-        catch (error) {
-            alert(error.message);
-        }
+
     }
 
 

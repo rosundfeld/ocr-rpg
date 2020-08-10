@@ -17,6 +17,27 @@
     border-right: solid 4px #944b44;
 }
 
+.profileText {
+    font-family: 'Grenze Gotisch', cursive;
+    font-weight: bold;
+    font-size: 3rem;
+    margin: 0;
+}
+
+.logoTextContainer {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 3%;
+}
+
+.logoTextContainer img {
+    object-fit: cover; 
+    width: 21.3rem;
+}
+
 input {
     width: 100%;
  }
@@ -24,10 +45,19 @@ input {
 .formContainer ::placeholder {
     color: white;
     opacity: 1; /* Firefox */
+    font-size: 1rem;
+}
+.formContainer input {
+    font-size: 1rem;
+}
+
+.resetPwd span {
+    color: white;
+    border: white solid 2px;
 }
 
 .formLogin {
-    height: 23vh;
+    /* height: 23vh; */
     width: 35vh;
     display: block;
     padding: 5%;
@@ -35,6 +65,18 @@ input {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+}
+
+.formProfile {
+    width: 35vh;
+    display: block;
+    height: 30rem;
+    padding: 18%;
+    background-image: url('../../Assets/LoginWallpaper/profileScroll.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: transparent;
 }
 
 .wallpaper {
