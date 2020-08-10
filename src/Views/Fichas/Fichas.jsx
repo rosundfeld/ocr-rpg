@@ -19,6 +19,9 @@ import { FormControl, InputLabel, Input, FormHelperText, Paper, Grid, Typography
 //componentes
 import GetInfo from "../../Components/GetInfo/getInfo";
 
+//Firebase
+import firebase from "../../firebase";
+
 const useStyles = makeStyles({
 
   gridTotal: {
@@ -156,16 +159,21 @@ const useStyles = makeStyles({
 
 });
 
-export default function Fichas() {
-
+export default function Fichas(props) {
 
   const classes = useStyles();
+
+  if (!firebase.getCurrentUsername()) {
+    //Não logado
+    alert('Por favor, primeiro faça o login!')
+    props.history.replace('/login')
+    return null;
+  }
 
   return (
     <div className={"background"}>
       <div className={classes.container}>
-        <h1 className={classes.title} >Fichas</h1>
-        <div className={classes.componentBorder}>
+        <div className={classes.paper}>
           <GetInfo />
         </div>
         <Paper className={"userInfoContainer"}>

@@ -40,6 +40,9 @@ const useStyles = makeStyles({
     textAlign: "center",
     justifyContent: "center",
     alignItems: "center"
+  },
+  paper: {
+
   }
 
 });
@@ -72,7 +75,7 @@ export default function GetInfo() {
   }
 
   return (
-    <div>
+    <div className={classes.paper}>
       <form className={classes.formOcr}>
         <label className={classes.selectForm} for="myfile">Selecione a Ficha
         </label>
