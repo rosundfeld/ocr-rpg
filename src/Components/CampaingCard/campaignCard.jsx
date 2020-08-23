@@ -78,7 +78,7 @@ export default function CampaingCard({ camp, setOpenCampDialog }) {
         <Grid container justify="space-between" alignItems="stretch" direction="column" className={classes.campCard}>
           <Grid item xs={12} className={classes.textContainer}>
             <Typography className={classes.title}>
-              {camp.campaignName}
+              {camp.name}
             </Typography>
           </Grid>
           <Grid item xs={12} className={classes.textContainer}>
@@ -99,7 +99,7 @@ export default function CampaingCard({ camp, setOpenCampDialog }) {
         <Grid container direction="column" justify="center" alignItems="center" className={classes.campCard}>
           <Grid item xs={12} className={classes.textContainer}>
             <IconButton className={classes.addButton}>
-              <AddIcon />
+              <AddIcon /> {camp}
             </IconButton>
           </Grid>
         </Grid>

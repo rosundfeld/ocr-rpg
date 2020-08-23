@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 
 // Material UI
-import { Paper, Avatar } from "@material-ui/core";
+import { Paper, Avatar, CircularProgress } from "@material-ui/core";
 
 //MakeStyles
 import { makeStyles } from "@material-ui/core/styles";
@@ -42,7 +42,67 @@ const useStyles = makeStyles({
 export default function Campanhas(props) {
   const classes = useStyles();
 
-  const [openCampDialog, setOpenCampDialog] = useState(false)
+  const [openCampDialog, setOpenCampDialog] = useState(false);
+  const [campaignList, setCampaignList] = useState([]);
+  const [loadingContent, setLoadingContent] = useState(true);
+
+  // useEffect(async () => {
+  //   setCampaignList(await firebase.getCampInformation());
+  //   console.log(campaignList);
+  // }, [campaignList]);
+
+  // this.db.collection('users')
+  // .doc(userId)
+  // .collection('camps')
+  // .get()
+  // .then(await function(querySnapshot) {
+  //   querySnapshot.forEach(function(doc) {
+  //       list.push(doc.data());
+  //   });
+
+  useEffect(() => {
+    const list = [];
+    firebase.getCampInformation().then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        list.push(doc.data());
+      });
+      setCampaignList(list);
+    });
+  }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const result = firebase.getCampInformation()
+  //       console.log(result)
+  //       setCampaignList(result);
+  //       setLoadingContent(false);
+  //     }
+  //     catch {
+  //       console.log("mai que merda em")
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
+  // useEffect(() => {
+  //   async function getCamp() {
+  //     let userId = firebase.auth.currentUser.uid;
+  //     let list = [];
+  //     firebase.db.collection('users')
+  //       .doc(userId)
+  //       .collection('camps')
+  //       .get()
+  //       .then(function (querySnapshot) {
+  //         querySnapshot.forEach(function (doc) {
+  //           list.push(doc.data());
+  //         });
+
+  //       });
+  //     await setCampaignList(list);
+  //   }
+  //   getCamp();
+  // }, []);
 
   if (!firebase.getCurrentUsername()) {
     //Não logado
@@ -54,15 +114,7 @@ export default function Campanhas(props) {
   // function useCamps() {
   //   const [campList, setCampList] = useState([]);
 
-  //   useEffect(() => {
-  //     firebase
-  //       .firestore()
-  //       .collection('camp-list')
-  //       .onSnapshot(snapshot) => {
-  //       debbuger
-  //     }
-  //   }, [])
-  // }
+
 
   const campaignSettings = [
     {
@@ -82,10 +134,10 @@ export default function Campanhas(props) {
     },
   ];
 
-  return (
+  return (loadingContent === true ?
     <div className={classes.container}>
       <div className={classes.bookContainer}>
-        {campaignSettings.map((camp) =>
+        {campaignList.map((camp) =>
           <CampaingCard camp={camp} />
         )}
         <CampaingCard camp={null} setOpenCampDialog={setOpenCampDialog} />
@@ -93,6 +145,6 @@ export default function Campanhas(props) {
       {openCampDialog &&
         <CampAdd openCampDialog={openCampDialog} setOpenCampDialog={setOpenCampDialog} />
       }
-    </div>
+    </div> : <CircularProgress />
   );
 }

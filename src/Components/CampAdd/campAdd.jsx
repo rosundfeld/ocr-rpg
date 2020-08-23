@@ -43,6 +43,7 @@ export default function CampAdd({ openCampDialog, setOpenCampDialog }) {
     const [campChar, setCampChar] = useState("");
 
     function sendCampInformation() {
+        firebase.sendCampInformation(campName, campMaster, campChar);
         setOpenCampDialog(false);
     };
 
@@ -52,15 +53,16 @@ export default function CampAdd({ openCampDialog, setOpenCampDialog }) {
             <Paper className={classes.formContainer}>
                 <FormControl className={classes.formInput}>
                     <InputLabel htmlFor="my-input">Nome da Campanha</InputLabel>
-                    <Input value={campName} onChange={(event) => setCampName(event.target.value)} aria-describedby="Nome da Campanha" />
+                    <Input required value={campName} onChange={(event) => setCampName(event.target.value)} aria-describedby="Nome da Campanha" />
                 </FormControl>
                 <FormControl className={classes.formInput}>
                     <InputLabel htmlFor="my-input">Mestre</InputLabel>
-                    <Input value={campMaster} onChange={(event) => setCampMaster(event.target.value)} aria-describedby="my-helper-text" />
+                    <Input required value={campMaster} onChange={(event) => setCampMaster(event.target.value)} aria-describedby="my-helper-text" />
                 </FormControl>
                 <FormControl className={classes.formInput}>
                     <InputLabel htmlFor="age-native-simple">Personagem</InputLabel>
                     <Select
+                        required
                         native
                         value={campChar}
                         onChange={(event) => setCampChar(event.target.value)}

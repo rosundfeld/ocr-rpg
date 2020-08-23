@@ -62,5 +62,53 @@ class Firebase {
     return this.auth.currentUser && this.auth.currentUser.email
   }
 
+  sendCampInformation(campName, campMaster, campCharacter) {
+    let userId = this.auth.currentUser.uid;
+    console.log(userId)
+    this.db.collection('users').doc(userId).collection('camps').add({
+      name: campName,
+      master: campMaster,
+      character: campCharacter
+  })
+  }
+
+//   async getCampInformation() {
+//     let userId = this.auth.currentUser.uid;
+//     let list = [];
+//     querySnapshot = await this.db.collection('users')
+//     .doc(userId)
+//     .collection('camps')
+//     .get();
+//       querySnapshot.forEach(function(doc) {
+//            list.push(doc.data());
+//       });
+//       console.log(list)
+//  return list;
+//     }
+
+async getCampInformation() {
+  let userId = this.auth.currentUser.uid;
+  let list = [];
+  const camp = await this.db.collection('users')
+  .doc(userId)
+  .collection('camps')
+  .get()
+  return camp.get()
+}
+
+  // async getCampInformation() {
+    
+  //    this.db.collection('users')
+  //   .doc(userId)
+  //   .collection('camps')
+  //   .get()
+  //   .then(await function(querySnapshot) {
+  //     querySnapshot.forEach(function(doc) {
+  //         list.push(doc.data());
+  //     });
+  //     return list;
+  // });
+  // }
+
 }
 export default new Firebase()

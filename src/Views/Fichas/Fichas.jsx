@@ -163,6 +163,12 @@ export default function Fichas(props) {
 
   const classes = useStyles();
 
+  const [name, setName] = useState("nomeIrado");
+
+  function sendInformation() {
+
+  }
+
   if (!firebase.getCurrentUsername()) {
     //Não logado
     alert('Por favor, primeiro faça o login!')

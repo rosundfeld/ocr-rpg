@@ -53,7 +53,8 @@ export default function GetInfo() {
   const [imagePreview, setImagePreview] = useState(null);
   const [imageData, setImageData] = useState(null);
 
-  useEffect(async () => {
+
+  useEffect(() => {
     const config = {
       method: "GET",
       headers: {
@@ -63,8 +64,12 @@ export default function GetInfo() {
       },
       mode: "cors",
     };
-    const resp = await fetch("http://127.0.0.1:5000/ocr-route", config);
-    console.log(resp);
+    // Create an scoped async function in the hook
+    async function sendImg() {
+      const resp = await fetch("http://127.0.0.1:5000/ocr-route", config);
+      console.log(resp);
+    }
+    sendImg();
   }, []);
 
   function handleImage(event) {
@@ -76,20 +81,22 @@ export default function GetInfo() {
 
   return (
     <div className={classes.paper}>
-      <form className={classes.formOcr}>
+      <form className={classes.formOcr} action="/upload-image" enctype="multipart/form-data" method="POST">
         <label className={classes.selectForm} for="myfile">Selecione a Ficha
         </label>
-        {/* <input
+        <input
+          name="file"
           id={"submitButton"}
           className={classes.inputImage}
           type="file"
           onChange={handleImage}
-          accept="image/png, image/jpeg, image/jfif"
-        /> */}
+          accept="image/*"
+        />
+        <input type="submit" />
 
 
 
-        <input type="submit" value="Escolher imagem da Ficha" />
+        {/* <input type="submit" value="Escolher imagem da Ficha" /> */}
         {imagePreview === null ? (
           <span>Nenhuma ficha selecionada</span>
         ) : (
@@ -99,6 +106,6 @@ export default function GetInfo() {
       <div>
 
       </div>
-    </div>
+    </div >
   );
 }
