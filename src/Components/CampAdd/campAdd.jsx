@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 //MaterialUi
-import { FormControl, InputLabel, FormHelperText, Input, Select, Paper, Button, Dialog, DialogTitle } from "@material-ui/core";
+import { FormControl, InputLabel, FormHelperText, Input, Select, Paper, Button, Dialog, DialogTitle, Grid } from "@material-ui/core";
 
 //Icons
 import AddIcon from '@material-ui/icons/Add';
@@ -22,14 +22,20 @@ const useStyles = makeStyles({
         alignItems: "center",
         textAlign: "center",
         overflow: "hidden",
-        padding: "2rem"
+        padding: "2rem",
+        paddingTop: "0"
     },
     formInput: {
         display: "flex",
         margin: "1rem",
+        fontSize: "3rem",
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
+    },
+    buttomSubmit: {
+        color: "#944b44",
+        border: "#944b44 solid 1px"
     }
 
 });
@@ -42,13 +48,18 @@ export default function CampAdd({ openCampDialog, setOpenCampDialog }) {
     const [campMaster, setCampMaster] = useState("");
     const [campChar, setCampChar] = useState("");
 
-    function sendCampInformation() {
-        firebase.sendCampInformation(campName, campMaster, campChar);
+    function handleClose() {
         setOpenCampDialog(false);
+    }
+
+    async function sendCampInformation() {
+        await firebase.sendCampInformation(campName, campMaster, campChar);
+        setOpenCampDialog(false);
+        window.location.reload(false);
     };
 
     return (
-        <Dialog aria-labelledby="simple-dialog-title" open={openCampDialog}>
+        <Dialog aria-labelledby="simple-dialog-title" open={openCampDialog} onClose={handleClose}>
             <DialogTitle id="simple-dialog-title">Adicione uma Campanha</DialogTitle>
             <Paper className={classes.formContainer}>
                 <FormControl className={classes.formInput}>
@@ -73,7 +84,7 @@ export default function CampAdd({ openCampDialog, setOpenCampDialog }) {
                         <option value={"Legolas"}>Legolas</option>
                     </Select>
                 </FormControl>
-                <Button onClick={() => sendCampInformation()}>
+                <Button className={classes.buttomSubmit} onClick={() => sendCampInformation()}>
                     Enviar dados
                 </Button>
             </Paper>
