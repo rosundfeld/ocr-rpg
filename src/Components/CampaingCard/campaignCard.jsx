@@ -29,6 +29,14 @@ const useStyles = makeStyles({
     justifyContent: "center",
     alignItems: "center"
   },
+  addCharContainer: {
+    width: "100%",
+    padding: "0.5rem",
+    minHeight: "150px",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "7rem"
+  },
   campCardAdd: {
     lineHeight: "150px",
   },
@@ -67,8 +75,24 @@ export default function CampaingCard({ camp, setOpenCampDialog }) {
   const [campMasterEdit, setCampMasterEdit] = useState("");
   const [campCharEdit, setCampCharEdit] = useState("");
 
-  function sendCampInformation() {
 
+  useEffect(() => {
+    async function getEditData() {
+      if (camp) {
+        setCampNameEdit(camp.name);
+        setCampMasterEdit(camp.master);
+        setCampCharEdit(camp.character)
+      }
+    };
+    getEditData();
+  }, [camp]);
+
+  function openEditCampDialog() {
+    setOpenEdit(true)
+  }
+
+  function handleCloseEdit() {
+    setOpenEdit(false)
   }
 
   function openAddCampDialog() {
@@ -81,6 +105,12 @@ export default function CampaingCard({ camp, setOpenCampDialog }) {
 
   function handleClose() {
     setOpenConfim(false);
+  }
+
+  async function sendEditCamp() {
+    handleClose();
+    await firebase.updateCampInformation(camp, campNameEdit, campMasterEdit, campCharEdit);
+    window.location.reload(false);
   }
 
   async function trueConfirm() {
@@ -110,66 +140,62 @@ export default function CampaingCard({ camp, setOpenCampDialog }) {
           </Grid>
           <Grid item xs={12} className={classes.textContainer}>
             <ButtonGroup size="large" color="secondary" className={classes.buttonContainer}>
-              <Button>Editar</Button>
+              <Button onClick={() => openEditCampDialog()}>Editar</Button>
               <Button onClick={() => openConfirmDialog()}>Remover</Button>
             </ButtonGroup>
           </Grid>
-          {openConfim &&
-            <Dialog
-              open={openConfim}
-              onClose={() => handleClose()}
-              aria-labelledby="Confirmar Remoção"
-            >
-              <DialogTitle>{"Deseja mesmo deletar essa campanha?"}</DialogTitle>
-              <DialogActions>
-                <Button onClick={() => handleClose()} color="secundary">
-                  Cancelar
+          <Dialog
+            open={openConfim}
+            onClose={() => handleClose()}
+            aria-labelledby="Confirmar Remoção"
+          >
+            <DialogTitle>{"Deseja mesmo deletar essa campanha?"}</DialogTitle>
+            <DialogActions>
+              <Button onClick={() => handleClose()} color="secundary">
+                Cancelar
               </Button>
-                <Button onClick={() => trueConfirm()} color="secundary" autoFocus>
-                  Aceitar
+              <Button onClick={() => trueConfirm()} color="secundary" autoFocus>
+                Aceitar
               </Button>
-              </DialogActions>
-            </Dialog>
-          }
-          {openEdit &&
-            <Dialog
-              open={openConfim}
-              onClose={() => handleClose()}
-              aria-labelledby="Confirmar Remoção"
-            >
-              <DialogTitle>{"Deseja mesmo deletar essa campanha?"}</DialogTitle>
-              <FormControl className={classes.formInput}>
-                <InputLabel htmlFor="my-input">Nome da Campanha</InputLabel>
-                <Input required value={campNameEdit} onChange={(event) => setCampNameEdit(event.target.value)} aria-describedby="Nome da Campanha" />
-              </FormControl>
-              <FormControl className={classes.formInput}>
-                <InputLabel htmlFor="my-input">Mestre</InputLabel>
-                <Input required value={campMasterEdit} onChange={(event) => setCampMasterEdit(event.target.value)} aria-describedby="my-helper-text" />
-              </FormControl>
-              <FormControl className={classes.formInput}>
-                <InputLabel htmlFor="age-native-simple">Personagem</InputLabel>
-                <Select
-                  required
-                  native
-                  value={campCharEdit}
-                  onChange={(event) => setCampCharEdit(event.target.value)}
-                >
-                  <option aria-label="None" value="" />
-                  <option value={"Miffihir"}>Miffihir</option>
-                  <option value={"Aragorn"}>Aragorn</option>
-                  <option value={"Legolas"}>Legolas</option>
-                </Select>
-              </FormControl>
-              <Button className={classes.buttomSubmit} onClick={() => sendCampInformation()}>
-                Enviar dados
+            </DialogActions>
+          </Dialog>
+          <Dialog
+            open={openEdit}
+            onClose={() => handleCloseEdit()}
+            aria-labelledby="Editar Camp"
+          >
+            <DialogTitle>{"Edite as informações da campanha"}</DialogTitle>
+            <FormControl className={classes.formInput}>
+              <InputLabel htmlFor="my-input">Nome da Campanha</InputLabel>
+              <Input required value={campNameEdit} onChange={(event) => setCampNameEdit(event.target.value)} aria-describedby="Nome da Campanha" />
+            </FormControl>
+            <FormControl className={classes.formInput}>
+              <InputLabel htmlFor="my-input">Mestre</InputLabel>
+              <Input required value={campMasterEdit} onChange={(event) => setCampMasterEdit(event.target.value)} aria-describedby="Mestre da Campanha" />
+            </FormControl>
+            <FormControl className={classes.formInput}>
+              <InputLabel htmlFor="age-native-simple">Personagem</InputLabel>
+              <Select
+                required
+                native
+                value={campCharEdit}
+                onChange={(event) => setCampCharEdit(event.target.value)}
+              >
+                <option aria-label="None" value="" />
+                <option value={"Miffihir"}>Miffihir</option>
+                <option value={"Aragorn"}>Aragorn</option>
+                <option value={"Legolas"}>Legolas</option>
+              </Select>
+            </FormControl>
+            <Button className={classes.buttomSubmit} onClick={() => sendEditCamp()}>
+              Enviar dados
                 </Button>
-            </Dialog>
-          }
+          </Dialog>
         </Grid>
       </Paper>
     </div > :
     <div className={classes.container}>
-      <Paper onClick={() => openAddCampDialog()} className={classes.addCampContainer}>
+      <Paper onClick={() => openAddCampDialog()} className={classes.addCharContainer}>
         <Grid container direction="column" justify="center" alignItems="center" className={classes.campCardAdd}>
           <Grid item xs={12} className={classes.textContainer}>
             <IconButton className={classes.addButton}>

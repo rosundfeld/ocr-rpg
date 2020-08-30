@@ -37,6 +37,9 @@ const useStyles = makeStyles({
     position: "relative",
     backgroundAttachment: "fixed",
     backgroundColor: "black"
+  },
+  circularProgress: {
+    marginTop: "18rem",
   }
 });
 
@@ -50,8 +53,8 @@ export default function Campanhas(props) {
 
   useEffect(() => {
     async function getData() {
-      const a = await firebase.getCampInformation();
-      setCampaignList(a);
+      const info = await firebase.getCampInformation();
+      setCampaignList(info);
       setLoadingContent(false);
     };
     getData();
@@ -64,24 +67,6 @@ export default function Campanhas(props) {
     return null;
   }
 
-  const campaignSettings = [
-    {
-      campaignName: "Gods Name",
-      character: "Miffhir",
-      master: "Pedro Pinho"
-    },
-    {
-      campaignName: "O Calice de Fogo",
-      character: "Aragorn",
-      master: "Sophia Schuster"
-    },
-    {
-      campaignName: "Valorozo",
-      character: "Phoenix",
-      master: "Riot Games"
-    },
-  ];
-
   return (
     <div className={classes.container}>
       {loadingContent === false ?
@@ -91,7 +76,7 @@ export default function Campanhas(props) {
           )}
           <CampaingCard camp={null} setOpenCampDialog={setOpenCampDialog} />
         </div>
-        : <CircularProgress />}
+        : <CircularProgress color="secundary" className={classes.circularProgress} />}
       {openCampDialog &&
         <CampAdd openCampDialog={openCampDialog} setOpenCampDialog={setOpenCampDialog} />
       }
