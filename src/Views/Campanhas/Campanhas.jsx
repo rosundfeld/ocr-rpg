@@ -65,10 +65,9 @@ export default function Campanhas(props) {
     async function getData() {
       const info = await firebase.getCharInformation();
       setCharInfo(info);
-      // setLoadingContent(false);
     };
     getData();
-  }, []);
+  }, [charInfo]);
 
   if (!firebase.getCurrentUsername()) {
     //Não logado
@@ -82,7 +81,7 @@ export default function Campanhas(props) {
       {loadingContent === false ?
         <div className={classes.bookContainer}>
           {campaignList.map((camp, id) =>
-            <CampaingCard key={id} camp={camp} />
+            <CampaingCard charInfo={charInfo} key={id} camp={camp} />
           )}
           <CampaingCard camp={null} setOpenCampDialog={setOpenCampDialog} />
         </div>

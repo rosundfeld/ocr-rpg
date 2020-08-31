@@ -58,7 +58,6 @@ export default function CampAdd({ openCampDialog, setOpenCampDialog, charInfo })
         setOpenCampDialog(false);
         window.location.reload(false);
     };
-    console.log(charInfo)
 
     return (
         <Dialog aria-labelledby="simple-dialog-title" open={openCampDialog} onClose={handleClose}>

@@ -102,7 +102,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Login() {
+export default function Login(props) {
   const classes = useStyles();
 
   const [userNameInfo, setUserNameInfo] = useState("");
@@ -153,6 +153,7 @@ export default function Login() {
   async function login() {
     try {
       await firebase.login(userNameInfo, userPwdInfo);
+      props.history.replace('/')
       window.location.reload(false);
     }
     catch (error) {

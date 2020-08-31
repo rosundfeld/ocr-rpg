@@ -902,7 +902,7 @@ export default function CharInformation({ char }) {
                                     <Grid item xs={12} >
                                         <FormControl className={classes.itensMagic}>
                                             <InputLabel htmlFor="itemName">Nome</InputLabel>
-                                            <Input value={charEquips} onChange={(event) => setCharDadosVidaTotais(event.target.value)} id="itemName" />
+                                            <Input id="itemType" />
                                         </FormControl>
                                         <FormControl className={classes.itensMagic}>
                                             <InputLabel htmlFor="itemBonus">Bônus</InputLabel>

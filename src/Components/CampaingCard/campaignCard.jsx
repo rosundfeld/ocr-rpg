@@ -5,12 +5,23 @@ import { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 //MaterialUi
-import { Paper, Grid, Typography, IconButton, ButtonGroup, Button, Dialog, DialogActions, DialogTitle, Input, InputLabel, FormControl, Select } from "@material-ui/core";
+import { Paper, Grid, Typography, IconButton, ButtonGroup, Button, Dialog, DialogActions, DialogTitle, Input, InputLabel, FormControl, Select, TextField } from "@material-ui/core";
+
+//imagens
+import campWallpaper from "../../Assets/CampWallpaper/campBook.png";
+
 
 //Icons
 import AddIcon from '@material-ui/icons/Add';
 
+//components
+import CampInformation from "../../Components/CampInformation/campInformation"
+
 //css
+import "./campaignCard.css";
+
+//multipleClasses
+import classnames from "classnames";
 
 //Firebase
 import firebase from "../../firebase";
@@ -21,13 +32,17 @@ const useStyles = makeStyles({
     width: "30%",
     margin: "1rem",
     marginTop: "3rem",
+    background: "none",
   },
-  addCampContainer: {
+  addCampContainerCampanha: {
     width: "100%",
     padding: "0.5rem",
-    minHeight: "150px",
+    minHeight: "300px",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    background: `url(${campWallpaper}) no-repeat center`,
+    backgroundSize: "250px",
+    boxShadow: "none"
   },
   addCharContainer: {
     width: "100%",
@@ -38,38 +53,59 @@ const useStyles = makeStyles({
     marginTop: "7rem"
   },
   campCardAdd: {
-    lineHeight: "150px",
+    lineHeight: "300px",
+    marginLeft: "1.2rem"
   },
   textContainer: {
-    width: "100%",
+    width: "100%"
   },
   title: {
-    borderBottom: "solid lightgray 1px",
+    //tem que configurar pra caso o titulo seja maior do que oq cabe no livro
+    color: "gold",
+    //paddingTop:"6rem",
+    marginLeft: "1.7rem",
+    //borderBottom: "solid lightgray 1px ",
     fontWeight: "bold",
-    fontSize: "1.8rem"
+    fontSize: "1.5rem",
+    marginTop: "4rem",
+    textTransform: "capitalize"
   },
   master: {
-    borderBottom: "solid lightgray 1px",
+    // marginBottom:"3rem",
+    marginLeft: "1.7rem",
+    //borderBottom: "solid lightgray 1px",
     fontWeight: "bold",
     fontSize: "0.8rem",
     color: "gray"
   },
+  history: {
+    marginTop: "0.3rem",
+    marginLeft: "1.6rem",
+    fontWeight: "bold",
+    fontSize: "0.8rem",
+    color: "white"
+  },
   addButton: {
     border: "3px #944b44 solid",
-    color: "#944b44",
+    color: "gold",
     width: "6rem",
     height: "6rem",
-    backgroundColor: "white",
+  },
+  buttonContainer: {
+    marginTop: "3rem",
+    marginLeft: "2.2rem",
   }
+
 
 });
 
-export default function CampaingCard({ camp, setOpenCampDialog }) {
+export default function CampaingCard({ camp, setOpenCampDialog, charInfo }) {
 
   const classes = useStyles();
 
   const [openConfim, setOpenConfim] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [openCampInformation, setOpenCampInformation] = useState(false);
 
   const [campNameEdit, setCampNameEdit] = useState("");
   const [campMasterEdit, setCampMasterEdit] = useState("");
@@ -86,6 +122,13 @@ export default function CampaingCard({ camp, setOpenCampDialog }) {
     };
     getEditData();
   }, [camp]);
+
+  function handleOpenInformation() {
+    setOpenCampInformation(true);
+  }
+  function handleCloseInformation() {
+    setOpenCampInformation(true);
+  }
 
   function openEditCampDialog() {
     setOpenEdit(true)
@@ -121,25 +164,26 @@ export default function CampaingCard({ camp, setOpenCampDialog }) {
 
   return (camp !== null ?
     <div className={classes.container}>
-      <Paper className={classes.addCampContainer}>
-        <Grid container justify="space-between" alignItems="stretch" direction="column" className={classes.campCard}>
-          <Grid item xs={12} className={classes.textContainer}>
+      <Paper onClick={() => handleOpenInformation()} className={classnames(classes.addCampContainerCampanha, "campContainer")}>
+        <Grid container justify="space-evenly" alignItems="center" direction="column" className={classes.campCard}>
+          <Grid item xs={12} className={classnames(classes.textContainer, "bookContent")}>
             <Typography className={classes.title}>
               {camp.name}
             </Typography>
           </Grid>
-          <Grid item xs={12} className={classes.textContainer}>
+          <Grid item xs={12} className={classnames(classes.textContainer, "bookContent")}>
             <Typography className={classes.master}>
               Mestre: {camp.master}
             </Typography>
           </Grid>
-          <Grid item xs={12} className={classes.textContainer}>
+          <Grid item xs={12} className={classnames(classes.textContainer, "bookContent")}>
             <Typography className={classes.history}>
-              Personagem: {camp.character}
+              Personagem: <br />
+              {camp.character}
             </Typography>
           </Grid>
-          <Grid item xs={12} className={classes.textContainer}>
-            <ButtonGroup size="large" color="secondary" className={classes.buttonContainer}>
+          <Grid item xs={12} className={classnames(classes.textContainer, "bookContent")}>
+            <ButtonGroup size="small" color="secondary" className={classes.buttonContainer}>
               <Button onClick={() => openEditCampDialog()}>Editar</Button>
               <Button onClick={() => openConfirmDialog()}>Remover</Button>
             </ButtonGroup>
@@ -182,9 +226,9 @@ export default function CampaingCard({ camp, setOpenCampDialog }) {
                 onChange={(event) => setCampCharEdit(event.target.value)}
               >
                 <option aria-label="None" value="" />
-                <option value={"Miffihir"}>Miffihir</option>
-                <option value={"Aragorn"}>Aragorn</option>
-                <option value={"Legolas"}>Legolas</option>
+                {/* {charInfo.map((char, id) =>
+                  <option key={id} value={char.char}>{char.characterName}, {char.class}</option>
+                )} */}
               </Select>
             </FormControl>
             <Button className={classes.buttomSubmit} onClick={() => sendEditCamp()}>
@@ -192,10 +236,13 @@ export default function CampaingCard({ camp, setOpenCampDialog }) {
                 </Button>
           </Dialog>
         </Grid>
+        {/* {openCampInformation &&
+          <CampInformation handleCloseInformation={handleCloseInformation} openCampInformation={openCampInformation} />
+        } */}
       </Paper>
     </div > :
     <div className={classes.container}>
-      <Paper onClick={() => openAddCampDialog()} className={classes.addCampContainer}>
+      <Paper onClick={() => openAddCampDialog()} className={classnames(classes.addCampContainerCampanha, "campContainer")}>
         <Grid container direction="column" justify="center" alignItems="center" className={classes.campCardAdd}>
           <Grid item xs={12} className={classes.textContainer}>
             <IconButton className={classes.addButton}>

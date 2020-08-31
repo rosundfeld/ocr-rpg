@@ -5,12 +5,12 @@ import { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 //MaterialUi
-import { Paper, Grid, Typography, IconButton } from "@material-ui/core";
+import { Paper, Grid, Typography, IconButton, Dialog, DialogTitle, InputLabel, Input, Select, Button } from "@material-ui/core";
 
 //Icons
 import AddIcon from '@material-ui/icons/Add';
 
-//css
+import campWallpaper2 from "../../Assets/CampWallpaper/campBookOpen.png";
 
 //Firebase
 import firebase from "../../firebase";
@@ -18,98 +18,43 @@ import 'firebase/firestore';
 
 const useStyles = makeStyles({
     container: {
-        width: "20%",
-        margin: "1rem",
-        marginTop: "3rem",
+        overflow: "hidden",
+        backgroundColor: "transparent",
     },
-    addCampContainer: {
+    bookContainer: {
         width: "100%",
         padding: "0.5rem",
-        height: "",
+        minHeight: "90vh",
         justifyContent: "center",
-        alignItems: "center"
-    },
-    campCard: {
-
-    },
-    textContainer: {
-        width: "100%",
-    },
-    title: {
-        borderBottom: "solid lightgray 1px",
-        fontWeight: "bold",
-        fontSize: "1.8rem"
-    },
-    master: {
-        borderBottom: "solid lightgray 1px",
-        fontWeight: "bold",
-        fontSize: "0.8rem",
-        color: "gray"
-    },
-    addButton: {
-        border: "3px #944b44 solid",
-        color: "#944b44",
-        width: "4rem",
-        height: "4rem",
-        backgroundColor: "white"
+        alignItems: "center",
+        background: `url(${campWallpaper2}) no-repeat center`,
+        backgroundSize: "cover",
+        boxShadow: "none",
+        height: "100hv"
     }
 
 });
 
-export default function CampInfomation({ camp }) {
+export default function CampInfomation({ handleCloseInformation, openCampInformation }) {
 
     const classes = useStyles();
 
-    function useCamp() {
-        const [campList, setCampList] = useState([])
+    return (
+        <div >
+            <Dialog
+                className={classes.container}
+                open={openCampInformation}
+                fullWidth
+                maxWidth="lg"
+                onClose={() => handleCloseInformation()}
+                aria-labelledby="Informações da Campanha"
+            >
+                <Paper className={classes.bookContainer}>
+                    <Grid>
 
-        useEffect(() => {
-            firebase
-                .firestore()
-                .collection('campList')
-                .onSnapshot((snapshot) => {
-                    const newCamps = snapshot.docs.map((camp) => ({
-                        id: camp.id,
-                        ...camp.data()
-                    }))
-                })
-        }, [])
-
-        return campList;
-    }
-
-    return (camp !== null ?
-        <div className={classes.container}>
-            <Paper className={classes.addCampContainer}>
-                <Grid container justify="space-between" alignItems="stretch" direction="column" className={classes.campCard}>
-                    <Grid item xs={12} className={classes.textContainer}>
-                        <Typography className={classes.title}>
-                            {camp.campaignName}
-                        </Typography>
                     </Grid>
-                    <Grid item xs={12} className={classes.textContainer}>
-                        <Typography className={classes.master}>
-                            Mestre: {camp.master}
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} className={classes.textContainer}>
-                        <Typography className={classes.history}>
-                            Personagem: {camp.character.characterName}
-                        </Typography>
-                    </Grid>
-                </Grid>
-            </Paper>
-        </div> :
-        <div className={classes.container}>
-            <Paper className={classes.addCampContainer}>
-                <Grid container direction="column" justify="center" alignItems="center" className={classes.campCard}>
-                    <Grid item xs={12} className={classes.textContainer}>
-                        <IconButton className={classes.addButton}>
-                            <AddIcon />
-                        </IconButton>
-                    </Grid>
-                </Grid>
-            </Paper>
+                </Paper>
+            </Dialog>
         </div>
     );
 }

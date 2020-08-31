@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 
 //material UI
-import { Paper, Avatar } from "@material-ui/core";
+import { Paper, Avatar, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 //css
 import "./register.css";
@@ -48,6 +48,20 @@ const useStyles = makeStyles({
             cursor: "pointer",
         },
     },
+    voltar: {
+        border: "#944b44 solid 1px",
+        padding: "2px",
+        borderRadius: "25px",
+        background: "#944b44",
+        color: "white",
+        fontWeight: "bold",
+        marginTop: "1rem",
+        fontSize: "12px",
+        "&:hover": {
+            background: "#7d3f39",
+            cursor: "pointer",
+        },
+    }
 });
 
 export default function Register({ setRegisterOpen }) {
@@ -146,6 +160,7 @@ export default function Register({ setRegisterOpen }) {
                         value="Registrar"
                         onClick={() => onRegister()}
                     />
+                    <Button onClick={() => handleRegister()} className={classes.voltar}>Voltar</Button>
                 </form>
             </Paper>
         </React.Fragment>

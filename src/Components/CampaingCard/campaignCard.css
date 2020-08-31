@@ -1,0 +1,20 @@
+/* .campContainer:hover .titleName {
+    visibility: hidden;
+    color: transparent;
+}
+.campContainer:hover .masterName{
+    color: gray;
+}
+.bookContent {
+    visibility: hidden;
+    display: none;
+} */
+
+.titleName {
+   margin-top: 5rem !important;
+}
+
+/* .campContainer:hover .bookContent {
+    visibility: visible;
+    display: block;
+} */
