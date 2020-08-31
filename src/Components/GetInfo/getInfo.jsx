@@ -10,7 +10,10 @@ const useStyles = makeStyles({
   formOcr: {
     margin: "auto",
     marginTop: "2%",
-    width: "20%"
+    width: "75%",
+    border: "solid 1px lightgray",
+    borderRadius: "25px",
+    padding: "2rem"
   },
   inputImage: {
     border: "#944b44 solid 1px",
@@ -82,7 +85,7 @@ export default function GetInfo() {
   return (
     <div className={classes.paper}>
       <form className={classes.formOcr} action="/upload-image" enctype="multipart/form-data" method="POST">
-        <label className={classes.selectForm} for="myfile">Selecione a Ficha
+        <label className={classes.selectForm} for="myfile">Selecione uma foto da sua ficha!
         </label>
         <input
           name="file"

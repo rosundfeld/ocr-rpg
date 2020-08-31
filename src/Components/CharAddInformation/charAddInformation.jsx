@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 
 //css
-import "./Fichas.css";
+import "./charAddInformation.css";
 
 //Images
 import dragon from "../../Assets/Ficha/dragaoFicha.png";
@@ -11,13 +11,16 @@ import dragon from "../../Assets/Ficha/dragaoFicha.png";
 import { makeStyles } from "@material-ui/core/styles";
 
 //material ui
-import { FormControl, InputLabel, Input, FormHelperText, Paper, Grid, Typography, Checkbox, Select, MenuItem, TextField, ButtonGroup, Button, Dialog, DialogTitle, DialogActions } from "@material-ui/core"
+import { FormControl, InputLabel, Input, FormHelperText, Paper, Grid, Typography, Checkbox, Select, MenuItem, TextField, ButtonGroup, Button } from "@material-ui/core"
+
 //Firebase
 import firebase from "../../firebase";
-import 'firebase/firestore';
 
 //use more than 1 class
-import classnames from 'classnames'
+import classnames from 'classnames';
+
+//componets
+import GetInfo from "../GetInfo/getInfo"
 
 const useStyles = makeStyles({
     gridTotal: {
@@ -155,142 +158,110 @@ const useStyles = makeStyles({
 
 });
 
-export default function CharInformation({ char }) {
+export default function CharAddInformation() {
 
     const classes = useStyles();
 
     // Ficha header
-    const [charName, setCharName] = useState(char.characterName);
-    const [charClass, setCharClass] = useState(char.class);
+    const [charName, setCharName] = useState("");
+    const [charClass, setCharClass] = useState("");
     const [charLevel, setCharLevel] = useState("");
-    const [charPlayerName, setCharPlayerName] = useState(char.playerName);
-    const [charRace, setcharRace] = useState(char.race);
-    const [charAtencendent, setCharAntecendent] = useState(char.antecedent);
-    const [charTendency, setCharTendency] = useState(char.tendency);
-    const [charExpPoints, setCharExpPoints] = useState(char.expPoints);
+    const [charPlayerName, setCharPlayerName] = useState("");
+    const [charRace, setcharRace] = useState("");
+    const [charAtencendent, setCharAntecendent] = useState("");
+    const [charTendency, setCharTendency] = useState("");
+    const [charExpPoints, setCharExpPoints] = useState("");
 
     // Ficha atributos
-    const [charStr, setCharStr] = useState(char.str);
-    const [charDex, setCharDex] = useState(char.dex);
-    const [charCon, setCharCon] = useState(char.con);
-    const [charInt, setCharInt] = useState(char.int);
-    const [charWis, setCharWis] = useState(char.wis);
-    const [charCar, setCharCar] = useState(char.car);
+    const [charStr, setCharStr] = useState(10);
+    const [charDex, setCharDex] = useState(10);
+    const [charCon, setCharCon] = useState(10);
+    const [charInt, setCharInt] = useState(10);
+    const [charWis, setCharWis] = useState(10);
+    const [charCar, setCharCar] = useState(10);
 
 
     //Ficha Inspiracao,  Bonus prof
-    const [charInspiration, setCharInspiration] = useState(char.inspiration);
-    const [charBonusProf, setCharBonusProf] = useState(char.bonusProf);
+    const [charInspiration, setCharInspiration] = useState("");
+    const [charBonusProf, setCharBonusProf] = useState("");
 
     //Teste Resistencia
-    const [charStrResist, setCharStrResist] = useState(char.strResist);
-    const [charDexResist, setCharDexResist] = useState(char.dexResist);
-    const [charConResist, setCharConResist] = useState(char.conResist);
-    const [charIntResist, setCharIntResist] = useState(char.intResist);
-    const [charWisResist, setCharWisResist] = useState(char.wisResist);
-    const [charCarResist, setCharCarResist] = useState(char.carResist);
+    const [charStrResist, setCharStrResist] = useState(0);
+    const [charDexResist, setCharDexResist] = useState(0);
+    const [charConResist, setCharConResist] = useState(0);
+    const [charIntResist, setCharIntResist] = useState(0);
+    const [charWisResist, setCharWisResist] = useState(0);
+    const [charCarResist, setCharCarResist] = useState(0);
 
     //Proficiencias (help)
-    const [charProfAcrobacia, setCharAcrobacia] = useState(char.profAcrobacia);
-    const [charProfArcanismo, setCharArcanismo] = useState(char.profArcanismo);
-    const [charProfAtletismo, setCharAtletismo] = useState(char.profAtletismo);
-    const [charProfAtuacao, setCharAtuacao] = useState(char.profAtuacao);
-    const [charProfBlefar, setCharBlefar] = useState(char.profBlefar);
-    const [charProfFurtividade, setCharFurtividade] = useState(char.profFurtividade);
-    const [charProfHistoria, setCharHistoria] = useState(char.profHistoria);
-    const [charProfIntimidacao, setCharIntimidacao] = useState(char.profIntimidacao);
-    const [charProfIntuicao, setCharIntuicao] = useState(char.profIntuicao);
-    const [charProfInvesticacao, setCharInvesticacao] = useState(char.profInvesticacao);
-    const [charProfAfinidadeAnimal, setCharAfinidadeAnimal] = useState(char.profAfinidadeAnimal);
-    const [charProfMedicina, setCharMedicina] = useState(char.profMedicina);
-    const [charProfNatureza, setCharNatureza] = useState(char.profNatureza);
-    const [charProfPercepcao, setCharPercepcao] = useState(char.profPercepcao);
-    const [charProfPersuasao, setCharPersuasao] = useState(char.profPersuasao);
-    const [charProfPrestidigitacao, setCharPrestidigitacao] = useState(char.profPrestidigitacao);
-    const [charProfReligiao, setCharReligiao] = useState(char.profReligiao);
-    const [charProfSobrevivencia, setCharSobrevivencia] = useState(char.profSobrevivencia);
+    const [charProfAcrobacia, setCharAcrobacia] = useState(0);
+    const [charProfArcanismo, setCharArcanismo] = useState(0);
+    const [charProfAtletismo, setCharAtletismo] = useState(0);
+    const [charProfAtuacao, setCharAtuacao] = useState(0);
+    const [charProfBlefar, setCharBlefar] = useState(0);
+    const [charProfFurtividade, setCharFurtividade] = useState(0);
+    const [charProfHistoria, setCharHistoria] = useState(0);
+    const [charProfIntimidacao, setCharIntimidacao] = useState(0);
+    const [charProfIntuicao, setCharIntuicao] = useState(0);
+    const [charProfInvesticacao, setCharInvesticacao] = useState(0);
+    const [charProfAfinidadeAnimal, setCharAfinidadeAnimal] = useState(0);
+    const [charProfMedicina, setCharMedicina] = useState(0);
+    const [charProfNatureza, setCharNatureza] = useState(0);
+    const [charProfPercepcao, setCharPercepcao] = useState(0);
+    const [charProfPersuasao, setCharPersuasao] = useState(0);
+    const [charProfPrestidigitacao, setCharPrestidigitacao] = useState(0);
+    const [charProfReligiao, setCharReligiao] = useState(0);
+    const [charProfSobrevivencia, setCharSobrevivencia] = useState(0);
 
     //Sabedoria (pass)
-    const [charSabPass, setCharSabPass] = useState(char.sabPass);
+    const [charSabPass, setCharSabPass] = useState("");
 
     //Idiomas e outras proficiencias
-    const [charIdiomaEProf, setCharIdiomaEProf] = useState(char.idiomaEProf);
+    const [charIdiomaEProf, setCharIdiomaEProf] = useState("");
 
     //class armor / iniciativa / desloc
-    const [charClassArmor, setCharClassArmor] = useState(char.classArmor);
-    const [charIniciativa, setCharIniciativa] = useState(char.iniciativa);
-    const [charDesloc, setCharDesloc] = useState(char.desloc);
+    const [charClassArmor, setCharClassArmor] = useState("");
+    const [charIniciativa, setCharIniciativa] = useState("");
+    const [charDesloc, setCharDesloc] = useState("");
 
     //Pontos de vida totais
-    const [charPVTotais, setCharPVTotais] = useState(char.PVTotais);
-    const [charDadosVida, setCharDadosVida] = useState(char.dadosVida);
-    const [charDadosVidaTotais, setCharDadosVidaTotais] = useState(char.dadosVidaTotais);
+    const [charPVTotais, setCharPVTotais] = useState(0);
+    const [charDadosVida, setCharDadosVida] = useState("");
+    const [charDadosVidaTotais, setCharDadosVidaTotais] = useState("");
 
     //Ataques e Magias
-    const [charAtaquesEMagic, setCharAtaquesEMagic] = useState(char.ataquesEMagic);
+    const [charAtaquesEMagic, setCharAtaquesEMagic] = useState([]);
 
 
     //Equipamentos
-    const [charEquips, setCharEquips] = useState(char.equips);
+    const [charEquips, setCharEquips] = useState([]);
 
     //Dinheiro
-    const [charPC, setCharPC] = useState(char.PC);
-    const [charPP, setCharPP] = useState(char.PP);
-    const [charPO, setCharPO] = useState(char.PO);
-    const [charPL, setCharPL] = useState(char.PL);
+    const [charPC, setCharPC] = useState(0);
+    const [charPP, setCharPP] = useState(0);
+    const [charPO, setCharPO] = useState(0);
+    const [charPL, setCharPL] = useState(0);
 
     //Traços de personalidade
-    const [charTracosPerso, setCharTracosPerso] = useState(char.tracosPerso);
+    const [charTracosPerso, setCharTracosPerso] = useState("");
 
     //Ideiais
-    const [charIdeais, setCharIdeais] = useState(char.ideais);
+    const [charIdeais, setCharIdeais] = useState("");
 
     //Ligaçoes
-    const [charLigacoes, setCharLigacoes] = useState(char.ligacoes);
+    const [charLigacoes, setCharLigacoes] = useState("");
 
     //Defeitos
-    const [charDefeitos, setCharDefeitos] = useState(char.defeitos);
+    const [charDefeitos, setCharDefeitos] = useState("");
 
     //Habilidades e Caracteristica
-    const [charHabilidadeCarac, setCharHabilidadeCarac] = useState(char.habilidadeCarac);
-
-
-    const [confimRemove, setConfimRemove] = useState(false);
-
-    function handleConfirm() {
-        setConfimRemove(true);
-    }
-
-    function handleCloseConfirm() {
-        setConfimRemove(false);
-    }
-
-    async function AttInformation() {
-        await firebase.attFichaInformation(
-            charName, charClass, charLevel, charPlayerName,
-            charRace, charAtencendent, charTendency, charExpPoints,
-            charStr, charDex, charCon, charInt, charWis, charCar,
-            charInspiration, charBonusProf, charStrResist, charDexResist, charConResist,
-            charIntResist, charWisResist, charCarResist, charProfAcrobacia, charProfArcanismo,
-            charProfAtletismo, charProfAtuacao, charProfBlefar, charProfFurtividade,
-            charProfHistoria, charProfIntimidacao, charProfIntuicao, charProfInvesticacao,
-            charProfAfinidadeAnimal, charProfMedicina, charProfNatureza, charProfPercepcao,
-            charProfPersuasao, charProfPrestidigitacao, charProfReligiao, charProfSobrevivencia,
-            charSabPass, charIdiomaEProf, charClassArmor, charIniciativa, charDesloc,
-            charPVTotais, charDadosVida, charDadosVidaTotais, charAtaquesEMagic,
-            charEquips, charPC, charPP, charPO, charPL, charTracosPerso, charIdeais,
-            charLigacoes, charDefeitos, charHabilidadeCarac, char.id
-        );
-        window.location.reload(false);
-
-    }
+    const [charHabilidadeCarac, setCharHabilidadeCarac] = useState("");
 
     async function sendInformation() {
-        let charLevelEdit = charClass.split(" ")[1];
-        let charClassedit = charClass.split(" ")[0];
+        let charLevelEdit = charClass.split(",")[1];
 
         await firebase.sendFichaInformation(
-            charName, charClassedit, charLevelEdit, charPlayerName,
+            charName, charClass, charLevelEdit, charPlayerName,
             charRace, charAtencendent, charTendency, charExpPoints,
             charStr, charDex, charCon, charInt, charWis, charCar,
             charInspiration, charBonusProf, charStrResist, charDexResist, charConResist,
@@ -308,14 +279,12 @@ export default function CharInformation({ char }) {
         window.location.reload(false);
     };
 
-    async function removeInformation() {
-        await firebase.removeCharInformation(char);
-        handleCloseConfirm();
-        window.location.reload(false);
-    }
 
     return (
         <div className={classes.container}>
+            <div className={classes.paper}>
+                <GetInfo />
+            </div>
             <Paper className={"userInfoContainer"}>
                 <form>
                     {/* Nome Personagem */}
@@ -324,7 +293,7 @@ export default function CharInformation({ char }) {
                             <div className={"characterNameContainer"}>
                                 <img className={"dragonName"} src={dragon}></img>
                                 <FormControl>
-                                    <InputLabel htmlFor="nomePersonagem"> Nome do Personagem {charName}</InputLabel>
+                                    <InputLabel htmlFor="nomePersonagem"> Nome do Personagem</InputLabel>
                                     <Input value={charName} onChange={(event) => setCharName(event.target.value)} id="nomePersonagem" />
                                 </FormControl>
                             </div>
@@ -1084,32 +1053,13 @@ export default function CharInformation({ char }) {
                             </Grid>
                         </Grid>
                     </Grid>
-                    {char !== null &&
-                        <Grid container>
-                            <Grid item >
-                                <ButtonGroup size="large" color="secondary" className={classes.buttonContainer}>
-                                    <Button onClick={() => AttInformation()}>Atualizar</Button>
-                                    <Button onClick={() => sendInformation()}>Enviar</Button>
-                                    <Button onClick={() => handleConfirm()}>Excluir</Button>
-                                </ButtonGroup>
-                            </Grid>
+                    <Grid container>
+                        <Grid item >
+                            <ButtonGroup size="large" color="secondary" className={classes.buttonContainer}>
+                                <Button onClick={() => sendInformation()}>Enviar</Button>
+                            </ButtonGroup>
                         </Grid>
-                    }
-                    <Dialog
-                        open={confimRemove}
-                        onClose={() => handleCloseConfirm()}
-                        aria-labelledby="Confirmar Remoção"
-                    >
-                        <DialogTitle>{"Deseja mesmo deletar essa ficha?"}</DialogTitle>
-                        <DialogActions>
-                            <Button onClick={() => handleCloseConfirm()} color="secundary">
-                                Cancelar
-              </Button>
-                            <Button onClick={() => removeInformation()} color="secundary" autoFocus>
-                                Aceitar
-              </Button>
-                        </DialogActions>
-                    </Dialog>
+                    </Grid>
                 </form>
             </Paper>
         </div>

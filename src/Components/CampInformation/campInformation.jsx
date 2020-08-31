@@ -94,7 +94,7 @@ export default function CampInfomation({ camp }) {
                     </Grid>
                     <Grid item xs={12} className={classes.textContainer}>
                         <Typography className={classes.history}>
-                            Personagem: {camp.character}
+                            Personagem: {camp.character.characterName}
                         </Typography>
                     </Grid>
                 </Grid>

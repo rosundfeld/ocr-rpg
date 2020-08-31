@@ -25,6 +25,7 @@ import firebase from "./firebase";
 
 const useStyles = makeStyles({
   navIcon: {
+    color: "white",
     "&:hover": {
       cursor: "pointer",
       backgroundColor: "#944b44",
@@ -101,50 +102,31 @@ export default function App() {
         <ul className="navUl">
           <li>
             <Tooltip title="Home">
-              <IconButton className={classes.navIcon} aria-label="home">
                 <Link to="/">
-                  <FaHome />
+                  <IconButton className={classes.navIcon} aria-label="home">
+                      <FaHome />
+                  </IconButton>
                 </Link>
-              </IconButton>
             </Tooltip>
           </li>
           <li>
             <Tooltip title="Campanhas">
-              <IconButton className={classes.navIcon} aria-label="campanhas">
                 <Link to="/campanhas">
-                  <FaBook />
+                  <IconButton className={classes.navIcon} aria-label="campanhas">
+                      <FaBook />
+                  </IconButton>
                 </Link>
-              </IconButton>
             </Tooltip>
           </li>
           <li>
             <Tooltip title="Fichas">
-              <IconButton className={classes.navIcon} aria-label="fichas">
                 <Link to="/fichas">
-                  <FaScroll />
+                  <IconButton className={classes.navIcon} aria-label="fichas">
+                      <FaScroll />
+                  </IconButton>
                 </Link>
-              </IconButton>
             </Tooltip>
           </li>
-          {/* { !firebase.getCurrentUsername() ?
-            <li>
-              <Tooltip title="Login">
-                <IconButton className={classes.navIcon} aria-label="login">
-                  <Link to="/login">
-                    <FaSignInAlt />
-                  </Link>
-                </IconButton>
-              </Tooltip>
-            </li>
-            :
-            <li>
-            <Tooltip title="logout">
-              <IconButton className={classes.navIcon} onClick={() => logout()} aria-label="login">
-                  <FaSignOutAlt style={{color: "white"}} />
-              </IconButton>
-            </Tooltip>
-          </li>
-          } */}
         </ul>
         <div className="index">
           <Switch>

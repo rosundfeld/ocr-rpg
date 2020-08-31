@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 //MaterialUi
-import { Paper, Grid, Typography, IconButton, ButtonGroup, Button, Dialog, DialogActions, DialogTitle, Input, InputLabel, FormControl, Select } from "@material-ui/core";
+import { Paper, Grid, Typography, IconButton, Dialog, DialogTitle } from "@material-ui/core";
 
 //images
 import fichaBackground from "../../Assets/Ficha/fichaBackground.png"
@@ -23,6 +23,7 @@ import "./charCard.css"
 import firebase from "../../firebase";
 import 'firebase/firestore';
 import CharInformation from "../CharInformation/charInformation";
+import CharAddInformation from "../CharAddInformation/charAddInformation";
 
 const useStyles = makeStyles({
     container: {
@@ -83,6 +84,9 @@ export default function CharCard({ char }) {
 
     const classes = useStyles();
 
+    const [openCharInfo, setOpenCharInfo] = useState(false);
+    const [openCharAddInfo, setOpenCharAddInfo] = useState(false);
+
     function handleOpenInfo() {
         setOpenCharInfo(true)
     }
@@ -91,8 +95,14 @@ export default function CharCard({ char }) {
         setOpenCharInfo(false)
     }
 
-    const [openCharInfo, setOpenCharInfo] = useState(false);
-    const [openEdit, setOpenEdit] = useState(false);
+    function handleOpenAddInfo() {
+        setOpenCharAddInfo(true)
+    }
+
+    function handleCloseAddInfo() {
+        setOpenCharAddInfo(false)
+    }
+
 
     // async function sendEditCamp() {
     //     handleClose();
@@ -111,7 +121,7 @@ export default function CharCard({ char }) {
                     </Grid>
                     <Grid item xs={12} className={classes.textContainer}>
                         <Typography className={classes.content}>
-                            Classe: {char.class}
+                            Classe: {char.class.toString().split(" ")[0]}
                         </Typography>
                     </Grid>
                     <Grid item xs={12} className={classes.textContainer}>
@@ -124,25 +134,26 @@ export default function CharCard({ char }) {
                             Level:
                         </Typography>
                         <Paper className={classes.paperLevel}>
-                            5
+                            {char.level}
                         </Paper>
 
                     </Grid>
                 </Grid>
             </Paper>
+            {/* charInformation */}
             <Dialog
                 fullScreen
                 open={openCharInfo}
                 onClose={() => handleCloseInfo()}
                 aria-labelledby="Editar Camp"
             >
-                <DialogTitle>{"Ficha de " + char.characterName}</DialogTitle>
                 <CharInformation char={char} />
             </Dialog>
+
         </div >
         :
         <div className={classes.container}>
-            <Paper onClick={() => handleOpenInfo()} className={classnames(classes.addCampContainer, "charWall")}>
+            <Paper onClick={() => handleOpenAddInfo()} className={classnames(classes.addCampContainer, "charWall")}>
                 <Grid container direction="column" justify="center" alignItems="center" className={classes.campCardAdd}>
                     <Grid item xs={12} className={classes.textContainer}>
                         <IconButton className={classes.addButton}>
@@ -151,6 +162,14 @@ export default function CharCard({ char }) {
                     </Grid>
                 </Grid>
             </Paper>
+            {/* CharAddInformation */}
+            <Dialog
+                fullScreen
+                open={openCharAddInfo}
+                onClose={() => handleCloseAddInfo()}
+            >
+                <CharAddInformation />
+            </Dialog>
         </div>
     );
 }

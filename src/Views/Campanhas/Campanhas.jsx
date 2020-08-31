@@ -49,13 +49,23 @@ export default function Campanhas(props) {
   const [openCampDialog, setOpenCampDialog] = useState(false);
   const [campaignList, setCampaignList] = useState([]);
   const [loadingContent, setLoadingContent] = useState(true);
-
+  const [charInfo, setCharInfo] = useState(null);
 
   useEffect(() => {
     async function getData() {
-      const info = await firebase.getCampInformation();
-      setCampaignList(info);
+      const infoCamp = await firebase.getCampInformation();
+      setCampaignList(infoCamp);
       setLoadingContent(false);
+    };
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    async function getData() {
+      const info = await firebase.getCharInformation();
+      setCharInfo(info);
+      // setLoadingContent(false);
     };
     getData();
   }, []);
@@ -78,7 +88,7 @@ export default function Campanhas(props) {
         </div>
         : <CircularProgress color="secundary" className={classes.circularProgress} />}
       {openCampDialog &&
-        <CampAdd openCampDialog={openCampDialog} setOpenCampDialog={setOpenCampDialog} />
+        <CampAdd charInfo={charInfo} openCampDialog={openCampDialog} setOpenCampDialog={setOpenCampDialog} />
       }
     </div>
   );

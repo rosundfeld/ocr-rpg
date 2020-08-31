@@ -106,8 +106,7 @@ async removeCampInformation(camp) {
       .doc(userId)
       .collection('camps')
       .doc(camp.id)
-  
-    // Set the "capital" field of the city 'DC'
+
     return querySnapshot.update({
         character: campCharEdit,
         master: campMasterEdit,
@@ -150,7 +149,7 @@ async removeCampInformation(camp) {
     await this.db.collection('users').doc(userId).collection('characters').add({
       characterName: charName,
       class: charClass,
-      level: charLevel,
+      level: charClass.split(" ")[1],
       playerName: charPlayerName,
       race: charRace,
       antecedent: charAntencendent,
@@ -208,6 +207,111 @@ async removeCampInformation(camp) {
       defeitos: charDefeitos,
       habilidadeCarac: charHabilidadeCarac
   })
+  }
+
+  async attFichaInformation(
+    charName, charClass, charLevel, charPlayerName,
+    charRace, charAntencendent, charTendency, charExpPoints, charStr,
+    charDex, charCon, charInt, charWis, charCar,
+    charInspiration, charBonusProf, charStrResist, charDexResist,
+    charConResist, charIntResist, charWisResist, charCarResist,
+    charProfAcrobacia, charProfArcanismo, charProfAtletismo, charProfAtuacao,
+    charProfBlefar, charProfFurtividade, charProfHistoria, charProfIntimidacao,
+    charProfIntuicao, charProfInvestigacao, charProfAfinidadeAnimal, charProfMedicina,
+    charProfNatureza, charProfPercepcao, charProfPersuasao, charProfPrestidigitacao,
+    charProfReligiao, charProfSobrevivencia, charSabPass, charIdiomaEProf, charClassArmor,
+    charIniciativa, charDesloc, charPVTotais, charDadosVida, charDadosVidaTotais,
+    charAtaquesEMagic, charEquips, charPC, charPP, charPO, charPL, charTracosPerso,
+    charIdeais, charLigacoes, charDefeitos, charHabilidadeCarac, charId
+  ) {
+    let userId = this.auth.currentUser.uid;
+
+    try{
+      const querySnapshot = await this.db.collection('users')
+      .doc(userId)
+      .collection('characters')
+      .doc(charId)
+
+    return querySnapshot.update({
+      characterName: charName,
+      class: charClass,
+      level: charLevel,
+      playerName: charPlayerName,
+      race: charRace,
+      antecedent: charAntencendent,
+      tendency: charTendency,
+      expPoints: charExpPoints,
+      str: charStr,
+      dex: charDex,
+      con: charCon,
+      int: charInt,
+      wis: charWis,
+      car: charCar,
+      inspiration: charInspiration,
+      bonusProf: charBonusProf,
+      strResist: charStrResist,
+      dexResist: charDexResist,
+      conResist: charConResist,
+      intResist: charIntResist,
+      wisResist: charWisResist,
+      carResist: charCarResist,
+      profAcrobacia: charProfAcrobacia,
+      profArcanismo: charProfArcanismo,
+      profAtletismo: charProfAtletismo,
+      profAtuacao: charProfAtuacao,
+      profBlefar: charProfBlefar,
+      profFurtividade: charProfFurtividade,
+      profHistoria: charProfHistoria,
+      profIntimidacao: charProfIntimidacao,
+      profIntuicao: charProfIntuicao,
+      profInvestigacao: charProfInvestigacao,
+      profAfinidadeAnimal: charProfAfinidadeAnimal,
+      profMedicina: charProfMedicina,
+      profNatureza: charProfNatureza,
+      profPercepcao: charProfPercepcao,
+      profPersuasao: charProfPersuasao,
+      profPrestidigitacao: charProfPrestidigitacao,
+      profReligiao: charProfReligiao,
+      profSobrevivencia: charProfSobrevivencia,
+      sabPass: charSabPass,
+      idiomaEProf: charIdiomaEProf,
+      classArmor: charClassArmor,
+      iniciativa: charIniciativa,
+      desloc: charDesloc,
+      PVTotais: charPVTotais,
+      dadosVida: charDadosVida,
+      dadosVidaTotais: charDadosVidaTotais,
+      ataquesEMagic: charAtaquesEMagic,
+      equips: charEquips,
+      PC: charPC,
+      PP: charPP,
+      PO: charPO,
+      PL: charPL,
+      tracosPerso: charTracosPerso,
+      ideais: charIdeais,
+      ligacoes: charLigacoes,
+      defeitos: charDefeitos,
+      habilidadeCarac: charHabilidadeCarac
+    })
+    }
+      catch(error) {
+        console.log(error);
+    }
+  }
+  async removeCharInformation(char) {
+    let userId = this.auth.currentUser.uid;
+  
+      try {
+          await this.db.collection('users')
+        .doc(userId)
+        .collection('characters')
+        .doc(char.id)
+        .delete()
+        return "A Ficha de" + char.characterName + " foi removida com sucesso!";
+      }
+      catch(error) {
+        return "Houve um erro durante o processo de exclusão: " + error;
+      }
   }
 
 }

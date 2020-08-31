@@ -1,0 +1,122 @@
+.background {
+    background-image: url('../../Assets/Ficha/fichaPaper.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow-y: auto;
+    padding-left: 2%;
+}
+
+.dragonName {
+    max-width: 200px;
+    max-height: 200px;
+    margin-right: 2%;
+}
+
+.userInfoContainer {
+    display: flex;
+    padding: 1%;
+    margin-top: 2%;
+}
+
+.characterNameContainer {
+    display: flex;
+    
+    margin: auto;
+    padding: 4%
+}
+
+.characterNameContainer div input {
+   font-size: 3.5rem;
+}
+
+.otherUserInfo {
+    /* width: 60%; */
+    display: inline;
+    
+}
+
+.otherUserInfo div{
+    margin: 2%;
+    width: 45%;
+    font-size: 1.5rem;
+}
+
+.otherUserInfo div div{
+    width: 70%;
+}
+
+input[type=number] {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.BFInput input[type=number] {
+    font-size: 3rem;
+    text-align: center;
+}
+
+.TRAtr  {
+    width: 10%;
+    text-align: center;
+    justify-content: center;
+}
+
+.TRAtr input {
+    font-size: 1rem;
+    padding: 0;
+    font-weight: bold;
+    margin-bottom: 10%;
+}
+
+.classArmorBorder {
+    background-image: url("../../Assets/Ficha/classeArmadura.jpg");
+    padding: 5%;
+}
+
+.formSmall input {
+    font-size: 1rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.formSmall  {
+    width: 50%;
+}
+
+.formBig input{
+    font-size: 2rem;
+    padding: 0;
+    font-weight: bold;
+}
+
+.formBig {
+   width: 40%;
+}
+
+.failSuccessCheckbox {
+    padding: 0;
+    display: flex;
+}
+.textAreaLanguage {
+    width: 100%;
+    height: 9rem;
+}
+
+.textAreaLanguage textarea{
+    max-height: 120px;
+}
+
+.textAreaHabilities textarea{
+    max-height: 736px;
+}
+
+#itemBonus {
+    font-size: 1rem;
+}

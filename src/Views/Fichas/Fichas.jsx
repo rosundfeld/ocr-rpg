@@ -68,9 +68,6 @@ export default function Fichas(props) {
   return (
     <div className={"background"}>
       <div className={classes.container}>
-        <div className={classes.paper}>
-          <GetInfo />
-        </div>
         <div className={classes.bookContainer}>
           {charList.map((char, id) =>
             <CharCard key={id} char={char} />

@@ -195,7 +195,7 @@ export default function CampaingCard({ camp, setOpenCampDialog }) {
       </Paper>
     </div > :
     <div className={classes.container}>
-      <Paper onClick={() => openAddCampDialog()} className={classes.addCharContainer}>
+      <Paper onClick={() => openAddCampDialog()} className={classes.addCampContainer}>
         <Grid container direction="column" justify="center" alignItems="center" className={classes.campCardAdd}>
           <Grid item xs={12} className={classes.textContainer}>
             <IconButton className={classes.addButton}>

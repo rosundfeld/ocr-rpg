@@ -40,13 +40,14 @@ const useStyles = makeStyles({
 
 });
 
-export default function CampAdd({ openCampDialog, setOpenCampDialog }) {
+export default function CampAdd({ openCampDialog, setOpenCampDialog, charInfo }) {
 
     const classes = useStyles();
 
     const [campName, setCampName] = useState("");
     const [campMaster, setCampMaster] = useState("");
     const [campChar, setCampChar] = useState("");
+
 
     function handleClose() {
         setOpenCampDialog(false);
@@ -57,6 +58,7 @@ export default function CampAdd({ openCampDialog, setOpenCampDialog }) {
         setOpenCampDialog(false);
         window.location.reload(false);
     };
+    console.log(charInfo)
 
     return (
         <Dialog aria-labelledby="simple-dialog-title" open={openCampDialog} onClose={handleClose}>
@@ -78,10 +80,10 @@ export default function CampAdd({ openCampDialog, setOpenCampDialog }) {
                         value={campChar}
                         onChange={(event) => setCampChar(event.target.value)}
                     >
-                        <option aria-label="None" value="" />
-                        <option value={"Miffihir"}>Miffihir</option>
-                        <option value={"Aragorn"}>Aragorn</option>
-                        <option value={"Legolas"}>Legolas</option>
+                        <option defaultValue aria-label="None" value="" />
+                        {charInfo.map((char, id) =>
+                            <option key={id} value={char.char}>{char.characterName}, {char.class}</option>
+                        )}
                     </Select>
                 </FormControl>
                 <Button className={classes.buttomSubmit} onClick={() => sendCampInformation()}>
